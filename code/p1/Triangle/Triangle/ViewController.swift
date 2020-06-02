@@ -40,7 +40,6 @@ class ViewController: UIViewController {
     
 }
 
-https://www.jianshu.com/[https://github.com/anwent/Learn-Metal/tree/master/code/1-%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2](https://github.com/anwent/Learn-Metal/tree/master/code/1-%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2)
 
 extension ViewController {
     
@@ -53,15 +52,18 @@ extension ViewController {
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.frame = view.layer.frame
-        
         view.layer.addSublayer(metalLayer)
     }
     
     private func p3_createVertexBuffer() {
-        let vertexData: [Float] = [-0.5, 0.5, 0.0,
-                                   0.0, -0.5, 0.0,
+
+        let vertexData: [Float] = [-0.5, 0.5,  0.0,
+                                   0.0,  -0.5, 0.0,
                                    -1.0, -0.5, 0.0]
-        vertexBuffer = device?.makeBuffer(bytes: vertexData, length: vertexData.count * MemoryLayout<Float>.size, options: MTLResourceOptions(rawValue: 0))
+        
+        vertexBuffer = device?.makeBuffer(bytes: vertexData,
+                                          length: vertexData.count * MemoryLayout<Float>.size,
+                                          options: MTLResourceOptions(rawValue: 0))
     }
     
     private func p6_createRenderPipeline() {
@@ -106,13 +108,6 @@ extension ViewController {
         let re: MTLRenderCommandEncoder? = commandBuffer?.makeRenderCommandEncoder(descriptor: rpd)
         re?.setRenderPipelineState(pipelineState!)
         re?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        /*
-         绘制图形
-         - parameter type:          画三角形
-         - parameter vertexStart:   从vertex buffer 下标为0的顶点开始
-         - parameter vertexCount:   顶点数
-         - parameter instanceCount: 总共有1个三角形
-         */
         re?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
         re?.endEncoding()
         // 保证新纹理会在绘制完成后立即出现
