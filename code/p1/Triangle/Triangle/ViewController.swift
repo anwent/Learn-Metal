@@ -9,6 +9,19 @@
 import UIKit
 import MetalKit
 
+
+/*
+ 
+ 右侧多绘制一个三角形
+ 
+ 1. 添加右侧三角形的顶点坐标  line: 78
+ 
+ 2. 绘制方法将定点数改为 6   line: 129
+ 
+ 
+ */
+
+
 class ViewController: UIViewController {
     
     var device: MTLDevice? = nil
@@ -59,7 +72,12 @@ extension ViewController {
 
         let vertexData: [Float] = [-0.5, 0.5,  0.0,
                                    0.0,  -0.5, 0.0,
-                                   -1.0, -0.5, 0.0]
+                                   -1.0, -0.5, 0.0,
+                                   
+                                   
+                                   0.5, 0.5, 0.0,
+                                   0.0, -0.5, 0.0,
+                                   1.0, -0.5, 0.0]
         
         vertexBuffer = device?.makeBuffer(bytes: vertexData,
                                           length: vertexData.count * MemoryLayout<Float>.size,
@@ -108,7 +126,7 @@ extension ViewController {
         let re: MTLRenderCommandEncoder? = commandBuffer?.makeRenderCommandEncoder(descriptor: rpd)
         re?.setRenderPipelineState(pipelineState!)
         re?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        re?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+        re?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
         re?.endEncoding()
         // 保证新纹理会在绘制完成后立即出现
         commandBuffer?.present(drawable!)
