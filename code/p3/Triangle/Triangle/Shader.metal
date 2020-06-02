@@ -18,13 +18,6 @@ struct Uniforms {
     float4x4 modelMatrix;
 };
 
-//  [[vertex_id]]是通信中使用的每个顶点标识符。Metal使用顶点函数的输出和光栅化器生成的片段，生成片段函数的每个片段输入。每片段输入由[[stage_in]]属性限定符标识。
-//vertex Vertex vertex_shader(constant Vertex *v [[buffer(0)]],
-//                            uint vid[[vertex_id]])
-//{
-//    return v[vid];
-//}
-
 vertex Vertex vertex_shader(constant Vertex *v [[buffer(0)]],
                             constant Uniforms &un [[buffer(1)]],
                             uint vid [[vertex_id]])
