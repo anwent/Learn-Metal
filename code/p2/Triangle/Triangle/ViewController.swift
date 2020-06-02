@@ -112,6 +112,7 @@ extension ViewController {
         // 创建一个command encoder，并指定你之前创建的pipeline和顶点
         let re: MTLRenderCommandEncoder? = commandBuffer?.makeRenderCommandEncoder(descriptor: rpd)
         re?.setRenderPipelineState(pipelineState!)
+        // setVertexBuffer 的 atIndex 0 对应 vertex shader 函数中的 [[buffer(0)]] 属性
         re?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         re?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
         re?.endEncoding()
